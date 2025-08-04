@@ -3,7 +3,7 @@ name: Daily Course Enrollment
 on:
   schedule:
     # Runs every day at 07:00 UTC (adjust as needed)
-    - cron: '0 7 * * *'
+    - cron: '0 18 37 * *'
   workflow_dispatch: {}  # allows manual runs from the Actions tab
 
 jobs:
