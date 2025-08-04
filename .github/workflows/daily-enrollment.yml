@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Install Chrome/Chromium and the matching ChromeDriver
+      - uses: browser-actions/setup-chrome@v2
+        with:
+          install-dependencies: true    # install lib dependencies
+          install-chromedriver: true    # install the matching driver
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
