@@ -1,0 +1,37 @@
+name: Daily Course Enrollment
+
+on:
+  schedule:
+    # Runs every day at 07:00 UTC (adjust as needed)
+    - cron: '0 7 * * *'
+  workflow_dispatch: {}  # allows manual runs from the Actions tab
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium webdriver-manager
+
+      - name: Run the enrollment script
+        run: |
+          python cs_course_enrollment.py --term 202610 --csv enrollment.csv
+        # Note: adjust the term code as needed
+
+      - name: Commit and push results
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add enrollment.csv
+          git commit -m "Update enrollment CSV" || echo "No changes to commit"
+          git push
+
